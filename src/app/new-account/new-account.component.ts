@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, } from '@angular/core';
 import { LoggingService } from '../logging.service';
+import { AccountService } from '../accounts.service';
 
 
 @Component({
@@ -9,17 +10,12 @@ import { LoggingService } from '../logging.service';
   providers: [LoggingService]
 })
 export class NewAccountComponent {
-  @Output() accountAdded = new EventEmitter<{name: string, status: string}>();
-
   // create an instance has to be injected. Type is not an optional
-  constructor(private loggingService: LoggingService) {}
+  constructor(private loggingService: LoggingService,
+    private accountService: AccountService) {}
 
   onCreateAccount(accountName: string, accountStatus: string) {
-    this.accountAdded.emit({
-      name: accountName,
-      status: accountStatus
-    });
-
+    this.accountService.addAccount(accountName, accountStatus);
     this.loggingService.logStatusChange(accountStatus);
 
      // console.log('A server status changed, new status: ' + accountStatus);
