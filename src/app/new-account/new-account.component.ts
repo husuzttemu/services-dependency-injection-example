@@ -6,8 +6,8 @@ import { AccountService } from '../accounts.service';
 @Component({
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
-  styleUrls: ['./new-account.component.css'],
-  providers: [LoggingService]
+  styleUrls: ['./new-account.component.css']
+  // providers: [LoggingService]
 })
 export class NewAccountComponent {
   // create an instance has to be injected. Type is not an optional
@@ -16,7 +16,11 @@ export class NewAccountComponent {
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountService.addAccount(accountName, accountStatus);
-    this.loggingService.logStatusChange(accountStatus);
+    this.accountService.statusUpdated.subscribe(
+      (status: string) => alert('new status :' + status)
+    );
+
+    // this.loggingService.logStatusChange(accountStatus);
 
      // console.log('A server status changed, new status: ' + accountStatus);
 
